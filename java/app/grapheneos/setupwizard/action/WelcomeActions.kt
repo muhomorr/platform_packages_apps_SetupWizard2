@@ -135,6 +135,14 @@ object WelcomeActions {
     }
 
     private fun refreshOemUnlockStatus() {
+        if (Build.isDebuggable()) {
+            val flag = DebugFlags.getBool("isDeviceOemUnlocked_override")
+            if (flag != null) {
+                WelcomeData.oemUnlocked.value = flag
+                return
+            }
+        }
+
         WelcomeData.oemUnlocked.value = getOemLockManager()?.isDeviceOemUnlocked ?: false
     }
 }
