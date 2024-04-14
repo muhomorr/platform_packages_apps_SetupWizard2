@@ -17,6 +17,7 @@ import app.grapheneos.setupwizard.action.FinishActions
 import app.grapheneos.setupwizard.action.SetupWizard
 import app.grapheneos.setupwizard.action.WelcomeActions
 import app.grapheneos.setupwizard.data.WelcomeData
+import app.grapheneos.setupwizard.utils.DebugFlags
 
 // TODO: explore Material 3.0 with JetPack compose
 class WelcomeActivity : SetupWizardActivity(R.layout.activity_welcome) {
@@ -32,7 +33,8 @@ class WelcomeActivity : SetupWizardActivity(R.layout.activity_welcome) {
     private lateinit var letsSetupText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (WizardManagerHelper.isUserSetupComplete(this)) {
+        if (WizardManagerHelper.isUserSetupComplete(this)
+                && DebugFlags.getBool("allowLaunchAfterSetupCompleted") != true) {
             superOnCreateAtBaseClass(savedInstanceState)
             FinishActions.finish(this)
             return
