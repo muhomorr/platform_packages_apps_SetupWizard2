@@ -3,11 +3,13 @@ package app.grapheneos.setupwizard.action
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.pm.PackageManager
+import android.os.Build
 import android.provider.Settings
 import android.service.oemlock.OemLockManager
 import android.util.Log
 import app.grapheneos.setupwizard.appContext
 import app.grapheneos.setupwizard.data.FinishData
+import app.grapheneos.setupwizard.utils.DebugFlags
 
 object FinishActions {
     private const val TAG = "FinishActions"
@@ -47,6 +49,14 @@ object FinishActions {
     }
 
     private fun refreshOemUnlockStatus() {
+        if (Build.isDebuggable()) {
+            val flag = DebugFlags.getBool("isOemUnlockAllowedByUser_override")
+            if (flag != null) {
+                FinishData.oemUnlockingEnabled.value = flag
+                return
+            }
+        }
+
         FinishData.oemUnlockingEnabled.value =
             getOemLockManager()?.isOemUnlockAllowedByUser ?: false
     }
