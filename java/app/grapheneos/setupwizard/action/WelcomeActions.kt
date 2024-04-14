@@ -15,6 +15,7 @@ import app.grapheneos.setupwizard.APPLY_SIM_LANGUAGE_ON_ENTRY
 import app.grapheneos.setupwizard.R
 import app.grapheneos.setupwizard.appContext
 import app.grapheneos.setupwizard.data.WelcomeData
+import app.grapheneos.setupwizard.utils.DebugFlags
 import app.grapheneos.setupwizard.view.activity.OemUnlockActivity
 import com.android.internal.app.LocalePicker
 import com.android.internal.app.LocalePicker.LocaleInfo
@@ -115,7 +116,7 @@ object WelcomeActions {
     }
 
     fun next(activity: Activity) {
-        if (Build.isDebuggable()) {
+        if (Build.isDebuggable() && DebugFlags.getBool("enableUnlockedBootloaderHandling") != true) {
             // we allow free pass for development features on debug builds of the OS
             SetupWizard.next(activity)
             return
