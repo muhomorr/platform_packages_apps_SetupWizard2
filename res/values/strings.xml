@@ -17,7 +17,7 @@
     <string name="location_services">Location services</string>
     <string name="location_access_desc">Allow apps that have asked your permission to use your location information. This may include your current location and past locations.</string>
     <string name="restore_apps_and_data"><![CDATA[Restore apps & data]]></string>
-    <string name="data_restore_desc">If you have a backup from you last GrapheneOS device, you can restore it here.</string>
+    <string name="data_restore_desc">If you have a backup from your previous GrapheneOS device, you can restore it here.</string>
     <string name="you_re_all_set_now">You\'re all set now!</string>
     <string name="device_setup_done_desc">You\'re ready to start using your device</string>
     <string name="profile_setup_done_desc">You\'re ready to start using your user profile</string>
