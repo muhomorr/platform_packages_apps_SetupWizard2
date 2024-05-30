@@ -1,6 +1,7 @@
 package app.grapheneos.setupwizard.view.activity
 
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -43,6 +44,12 @@ class WelcomeActivity : SetupWizardActivity(R.layout.activity_welcome) {
 
     @MainThread
     override fun bindViews() {
+        if (Build.isDebuggable()) {
+            requireViewById<View>(R.id.welcome_to_grapheneos).setOnClickListener {
+                FinishActions.finish(this@WelcomeActivity)
+            }
+        }
+
         oemUnlockedContainer = requireViewById(R.id.oem_unlocked_container)
         language = requireViewById(R.id.language)
         accessibility = requireViewById(R.id.accessibility)
