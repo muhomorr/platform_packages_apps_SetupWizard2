@@ -62,7 +62,23 @@ object FinishActions {
     }
 
     private fun disableOemUnlockByUser() {
-        getOemLockManager()?.isOemUnlockAllowedByUser = false
+        val olm = getOemLockManager()
+        if (olm == null) {
+            Log.d(TAG, "disableOemUnlockByUser: OemLockManager is null")
+            return
+        }
+
+        try {
+            olm.setOemUnlockAllowedByUser(false)
+        } catch (e: SecurityException) {
+            // See https://discuss.grapheneos.org/d/17678-setup-wizard-cannot-be-finished-after-grapheneos-installation/15
+            if (!olm.isOemUnlockAllowed()) {
+                Log.d(TAG, "setOemUnlockAllowedByUser(false) failed, OEM unlocking is not allowed", e)
+            } else {
+                // TODO: surface this error to the user
+                Log.e(TAG, "", e)
+            }
+        }
     }
 
     private fun getOemLockManager(): OemLockManager? {
